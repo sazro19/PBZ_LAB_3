@@ -1,0 +1,41 @@
+//Вывести игры жанра FPS
+MATCH (a:GAME) WHERE a.genre = "FPS" RETURN a.name
+
+//2.Посмотреть игры, которые разрабатывала From Software
+MATCH (n:GAME) WHERE n.developer = "From Software" RETURN n
+
+//3.Вывести игры, оценка критиков которых отсортированы по убыванию
+MATCH (n:critic_review)-[k:REVIEW]->(f) 
+RETURN f
+ORDER BY k.rating desc
+
+//4.Вывести игры, оценка игроков которых больше 80 и меньше 90 
+MATCH (n:gamers_review)-[k:REVIEW]->(f)
+WHERE k.rating > 80 AND k.rating <90
+RETURN f.name
+
+//5.Вывести информацию об играх,отсортированных по возрастанию
+MATCH (p:GAME)
+RETURN p.name,p.genre,p.release_date,p.developer
+ORDER BY p.name
+
+//6.Вывести игры,которые одна из которой является продолжением другой
+MATCH (p1:GAME)-[:CONTINUED]->(p2:GAME)
+RETURN p1, p2
+
+//7.Вывести игры, у которых оценка игроков выше 80
+MATCH (n:game_review)-[k:REVIEW]->(f)
+WHERE k.rating > 80
+RETURN f.name
+
+//8.Вывести игры, имя которых начинается на D или C
+MATCH (n:GAME) WHERE n.name =~"D.*" OR n.name =~"C.*" RETURN n.name
+
+//9.Вывести максимальную оценку критиков
+MATCH (n:critic_review])-[k:REVIEW]->(f)
+RETURN max(k.rating)
+
+10.//Вывести игры, у которых оценка критиков состовляет 90
+MATCH (n:critic_review)-[k:REVIEW]->(f)
+WHERE k.rating = 92
+RETURN f.name
